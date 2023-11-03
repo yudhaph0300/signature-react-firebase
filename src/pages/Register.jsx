@@ -1,5 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Firebase
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../firebase.config";
+
+// Comp bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -32,12 +42,36 @@ function Register() {
     setShowPassword(!showPassword);
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   console.log(formData);
   return (
     <>
       <Container className="py-5">
         <h3 className="mb-3">Welcome to Signature</h3>
-        <Form>
+        <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -77,7 +111,7 @@ function Register() {
           </Form.Group>
 
           <Button variant="primary" type="submit" className="w-100">
-            Login
+            Register
           </Button>
         </Form>
 
