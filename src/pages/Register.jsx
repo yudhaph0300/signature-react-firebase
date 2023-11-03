@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 
 // Comp bootstrap
@@ -60,13 +61,18 @@ function Register() {
         displayName: name,
       });
 
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(formData);
   return (
     <>
       <Container className="py-5">
