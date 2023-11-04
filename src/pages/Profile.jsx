@@ -9,9 +9,11 @@ function Profile() {
   const [user, setUser] = useState(null);
 
   const auth = getAuth();
+
   useEffect(() => {
+    if (user) return;
     setUser(auth.currentUser);
-  }, []);
+  }, [auth.currentUser, user]);
 
   return (
     <>

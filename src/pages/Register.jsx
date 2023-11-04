@@ -10,6 +10,9 @@ import {
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 
+// Toast
+import { toast } from "react-toastify";
+
 // Comp bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -69,7 +72,7 @@ function Register() {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong with registration");
     }
   };
 

@@ -4,6 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 // Firebase
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+// Toas
+import { toast } from "react-toastify";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -49,7 +52,7 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Bad Credentials");
     }
   };
 
