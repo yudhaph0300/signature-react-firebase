@@ -12,6 +12,7 @@ import Furniture from "./pages/Furniture";
 import Readme from "./pages/Readme";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
           <Route path="/furniture" element={<Furniture />} />
           <Route path="/about" element={<About />} />
           <Route path="/readme" element={<Readme />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
